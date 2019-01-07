@@ -26,6 +26,7 @@ Tasks
 | GameStartRecord                          | NO             |
 | Replay Data                              | NO             |
 | Make a decent object structure           | NO             |
+| Game Version                             | NO             |
 | Add Tests                                | NO             |
 | Refactoring/Rewrite after Prototype      | NO             |
     

@@ -11,12 +11,12 @@ public class TestApplication {
     static void parseFiles(Parser parser, File[] files) {
         for (File file : files) {
             if (file.isDirectory()) {
-                //System.out.println("Directory: " + file.getName());
                 parseFiles(parser, file.listFiles()); // Calls same method again.
-            } else if (file.getName().endsWith(".w3g")){
-                System.out.println("Replay File: " + file.getAbsolutePath());
+            } else if (file.getName().endsWith(".w3g")) {
                 try {
-                    parser.parse(file.getAbsolutePath());
+                    Game game = parser.parse(file.getAbsolutePath());
+                    Player player1 = game.players.get(0);
+                    System.out.println(player1.name + " vs " + game.players.get(1).name + " on " + game.map);
                 } catch (Throwable t) {
                     t.printStackTrace();
                 }

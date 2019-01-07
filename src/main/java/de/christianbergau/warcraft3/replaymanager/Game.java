@@ -1,5 +1,8 @@
 package de.christianbergau.warcraft3.replaymanager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
     public static final int TYPE_CUSTOM = 0x01;
     public static final int TYPE_LADDER = 0x08;
@@ -18,6 +21,7 @@ public class Game {
     public String creator;
     public byte slots;
     public boolean isPrivate;
+    public List<Player> players = new ArrayList<>();
 
     public boolean isLadder() {
         return type == TYPE_LADDER;

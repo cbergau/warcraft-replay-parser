@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 public class Parser {
-    public void parse(String absolutePath) throws Throwable {
+    public Game parse(String absolutePath) throws Throwable {
         Path path = Paths.get(absolutePath);
         byte[] buffer = Files.readAllBytes(path);
 
@@ -48,12 +48,15 @@ public class Parser {
 
             if (block == 0) {
                 Player player = parsePlayer(game, decompressed);
-                parseGame(game, decompressed, player);
+                game.players.add(player);
+                parseGame(game, decompressed);
             }
         }
+
+        return game;
     }
 
-    private static void parseGame(Game game, ByteBuffer decompressed, Player player) {
+    private void parseGame(Game game, ByteBuffer decompressed) {
         // Find the first string that is not a null byte and read the game name
         while (true) {
             if ((char) decompressed.get() != 0) {
@@ -133,8 +136,6 @@ public class Parser {
             game.observerMode = ObserverMode.REFEREES;
         }
 
-        System.out.println();
-
         // 4.5 [Map&CreatorName]
         StringBuilder concat = new StringBuilder();
 
@@ -161,20 +162,15 @@ public class Parser {
 
         // 4.9 [PlayerList]
         while (decompressed.get() == 0x16) {
-            //@TODO Test this with multiple replays and names
             decompressed.position(decompressed.position() - 5);
-            Player p = parsePlayer(game, decompressed);
-            System.out.println(p);
+            Player player = parsePlayer(game, decompressed);
+            game.players.add(player);
         }
-
-        System.out.println(player);
-        System.out.println(game);
     }
 
-    private static Player parsePlayer(Game game, ByteBuffer decompressed) {
-        RecordId recordId;
-        recordId = new RecordId((byte) (decompressed.get() + decompressed.get() + decompressed.get() + decompressed.get()));
-        //System.out.println(recordId);
+    private Player parsePlayer(Game game, ByteBuffer decompressed) {
+        //@todo just skip 4 bytes
+        new RecordId((byte) (decompressed.get() + decompressed.get() + decompressed.get() + decompressed.get()));
 
         Player player = new Player();
         player.playerId = new PlayerId(decompressed.get());
@@ -202,23 +198,23 @@ public class Parser {
         game.type = decompressed.get();
 
         if (game.isLadder()) {
+            //@todo just skip the bytes
             int runtime = decompressed.getInt();
-            //System.out.println("runtime=" + runtime); // 3831616
             player.race = decompressed.get();
         }
 
         return player;
     }
 
-    public static int ord(String s) {
+    public int ord(String s) {
         return s.length() > 0 ? (s.getBytes(StandardCharsets.UTF_16LE)[0] & 0xff) : 0;
     }
 
-    public static int ord(char c) {
+    public int ord(char c) {
         return c < 0x80 ? c : ord(Character.toString(c));
     }
 
-    private static byte[] getByteArrayFromRange(byte[] buffer, int fromIndex, int length) {
+    private byte[] getByteArrayFromRange(byte[] buffer, int fromIndex, int length) {
         byte[] result = new byte[length];
 
         for (int i = 0; i < length; i++) {
@@ -228,7 +224,7 @@ public class Parser {
         return result;
     }
 
-    private static String getStringFromByteArray(byte[] buffer, int fromIndex, int length) {
+    private String getStringFromByteArray(byte[] buffer, int fromIndex, int length) {
         return new String(getByteArrayFromRange(buffer, fromIndex, length), StandardCharsets.UTF_8);
     }
 }

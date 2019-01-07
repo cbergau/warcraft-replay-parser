@@ -21,7 +21,7 @@ public class Parser {
         byteBuffer.position(28);
 
         ReplayHeader replayHeader = new ReplayHeader();
-        replayHeader.recordedGameString = getStringFromByteArray(buffer, 0, 28);
+        replayHeader.recordedGameString = ByteUtil.getStringFromByteArray(buffer, 0, 28);
         replayHeader.size = byteBuffer.get(0x001c);
         replayHeader.compressedFileSize = byteBuffer.getInt(0x0020);
         replayHeader.version = byteBuffer.get(0x0024);
@@ -29,7 +29,6 @@ public class Parser {
         replayHeader.numberOfBlocks = byteBuffer.get(0x002c);
 
         byteBuffer.position(replayHeader.size);
-        RecordId recordId;
 
         for (int block = 0; block < replayHeader.numberOfBlocks; block++) {
             DataBlockHeader dataBlockHeader = new DataBlockHeader();
@@ -95,12 +94,12 @@ public class Parser {
             }
 
             if (pos % 8 == 0) {
-                mask = ord((char) b);
+                mask = ByteUtil.ord((char) b);
             } else {
                 if ((mask & (0x1 << (pos % 8))) == 0) {
-                    bytes.add(dpos++, (char) ord((char) (b - 1)));
+                    bytes.add(dpos++, (char) ByteUtil.ord((char) (b - 1)));
                 } else {
-                    bytes.add(dpos++, (char) ord((char) b));
+                    bytes.add(dpos++, (char) ByteUtil.ord((char) b));
                 }
             }
 
@@ -110,10 +109,10 @@ public class Parser {
         // 4.4 [GameSettings]
 
         // Game Speed
-        game.speed = ord(bytes.get(0));
+        game.speed = ByteUtil.ord(bytes.get(0));
 
         // Game Visibility
-        int visibility = ord(bytes.get(1));
+        int visibility = ByteUtil.ord(bytes.get(1));
 
         if ((visibility & 1) > 0) {
             game.visibility = GameVisibility.HIDE_TERRAIN;
@@ -125,14 +124,14 @@ public class Parser {
             game.visibility = GameVisibility.DEFAULT;
         }
 
-        game.observerMode = (ord(bytes.get(1)) & 16) + ((ord(bytes.get(1)) & 32)) * 2;
-        game.teamsPlacedAtNeighboredPlaces = (ord(bytes.get(1)) & 64) > 0;
-        game.fixedTeams = ord(bytes.get(2)) > 0;
-        game.fullSharedUnitControl = (ord(bytes.get(3)) & 1) > 0;
-        game.randomHero = (ord(bytes.get(3)) & 2) > 0;
-        game.randomRaces = (ord(bytes.get(3)) & 4) > 0;
+        game.observerMode = (ByteUtil.ord(bytes.get(1)) & 16) + ((ByteUtil.ord(bytes.get(1)) & 32)) * 2;
+        game.teamsPlacedAtNeighboredPlaces = (ByteUtil.ord(bytes.get(1)) & 64) > 0;
+        game.fixedTeams = ByteUtil.ord(bytes.get(2)) > 0;
+        game.fullSharedUnitControl = (ByteUtil.ord(bytes.get(3)) & 1) > 0;
+        game.randomHero = (ByteUtil.ord(bytes.get(3)) & 2) > 0;
+        game.randomRaces = (ByteUtil.ord(bytes.get(3)) & 4) > 0;
 
-        if ((ord(bytes.get(3)) & 64) > 0) {
+        if ((ByteUtil.ord(bytes.get(3)) & 64) > 0) {
             game.observerMode = ObserverMode.REFEREES;
         }
 
@@ -155,8 +154,8 @@ public class Parser {
         decompressed.position(decompressed.position() + 3);
 
         // 4.7 [GameType]
-        game.type = (byte) ord((char) decompressed.get());
-        game.isPrivate = ord((char) decompressed.get()) > 0;
+        game.type = (byte) ByteUtil.ord((char) decompressed.get());
+        game.isPrivate = ByteUtil.ord((char) decompressed.get()) > 0;
 
         decompressed.position(decompressed.position() + 6);
 
@@ -204,27 +203,5 @@ public class Parser {
         }
 
         return player;
-    }
-
-    public int ord(String s) {
-        return s.length() > 0 ? (s.getBytes(StandardCharsets.UTF_16LE)[0] & 0xff) : 0;
-    }
-
-    public int ord(char c) {
-        return c < 0x80 ? c : ord(Character.toString(c));
-    }
-
-    private byte[] getByteArrayFromRange(byte[] buffer, int fromIndex, int length) {
-        byte[] result = new byte[length];
-
-        for (int i = 0; i < length; i++) {
-            result[i] = buffer[i + fromIndex];
-        }
-
-        return result;
-    }
-
-    private String getStringFromByteArray(byte[] buffer, int fromIndex, int length) {
-        return new String(getByteArrayFromRange(buffer, fromIndex, length), StandardCharsets.UTF_8);
     }
 }

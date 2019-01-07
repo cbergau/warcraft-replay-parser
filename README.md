@@ -12,23 +12,24 @@ Library to parse Warcraft III Replay files.
 Tasks
 ===
 
-| Feature                                  | Is Implemented |
-|------------------------------------------|----------------|
-| ReplayHeader                             | YES            |
-| Decompression of Data Block Header       | YES            |
-| Game Name                                | YES            |
-| Player 1                                 | YES            |
-| Game Settings                            | YES            |
-| Map                                      | YES            |
-| PlayerCount                              | YES            |
-| GameType                                 | YES            |
-| PlayerList                               | YES            |
-| GameStartRecord                          | NO             |
-| Replay Data                              | NO             |
-| Make a decent object structure           | NO             |
-| Game Version                             | NO             |
-| Add Tests                                | NO             |
-| Refactoring/Rewrite after Prototype      | NO             |
+| Feature                                       | Is Implemented |
+|-----------------------------------------------|----------------|
+| ReplayHeader                                  | YES            |
+| Decompression of Data Block Header            | YES            |
+| Game Name                                     | YES            |
+| Player 1                                      | YES            |
+| Game Settings                                 | YES            |
+| Map                                           | YES            |
+| PlayerCount                                   | YES            |
+| GameType                                      | YES            |
+| PlayerList                                    | YES            |
+| GameStartRecord                               | NO             |
+| Replay Data                                   | NO             |
+| Make a decent object structure                | NO             |
+| Game Version                                  | NO             |
+| Add Tests                                     | NO             |
+| Refactoring/Rewrite after Prototype           | NO             |
+| Fix: Some Replays get ArrayIndexOutOfBounds   | NO             |
     
 Links
 ===

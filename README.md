@@ -25,6 +25,9 @@ Tasks
 | PlayerList                               | YES            |
 | GameStartRecord                          | NO             |
 | Replay Data                              | NO             |
+| Make a decent object structure           | NO             |
+| Add Tests                                | NO             |
+| Refactoring/Rewrite after Prototype      | NO             |
     
 Links
 ===

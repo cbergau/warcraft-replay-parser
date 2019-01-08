@@ -1,6 +1,6 @@
-package de.christianbergau.warcraft3.replaymanager;
+package de.christianbergau.warcraft3.replaymanager.race;
 
-public class Race {
+public interface Race {
     public static final byte HUMAN = 0x01;
     public static final byte ORC = 0x02;
     public static final byte NIGHTELF = 0x04;
@@ -8,4 +8,6 @@ public class Race {
     public static final byte DEAMON = 0x10;
     public static final byte RANDOM = 0x20;
     public static final byte SELECTABLE_FIXED = 0x40;
+
+    public String shortName();
 }

@@ -2,7 +2,6 @@ package de.christianbergau.warcraft3.replaymanager;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -199,7 +198,7 @@ public class Parser {
         if (game.isLadder()) {
             //@todo just skip the bytes
             int runtime = decompressed.getInt();
-            player.race = decompressed.get();
+            player.race(decompressed.get());
         }
 
         return player;

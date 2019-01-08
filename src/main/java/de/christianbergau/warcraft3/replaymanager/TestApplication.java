@@ -16,7 +16,8 @@ public class TestApplication {
                 try {
                     Game game = parser.parse(file.getAbsolutePath());
                     Player player1 = game.players.get(0);
-                    System.out.println(player1.name + " vs " + game.players.get(1).name + " on " + game.map);
+                    Player player2 = game.players.get(1);
+                    System.out.println(player1.name + " (" + player1.race().shortName() + ") vs (" + player2.race().shortName() + ") " + player2.name + " on " + game.map);
                 } catch (Throwable t) {
                     t.printStackTrace();
                 }

@@ -148,8 +148,9 @@ public class Parser {
 
         String[] mapAndCreator = concat.substring(13).split("\0");
 
-        game.map = mapAndCreator[0];
-        game.creator = mapAndCreator[1];
+        Map map = new Map(mapAndCreator[1], mapAndCreator[0]);
+
+        game.map(map);
 
         // 4.6 [PlayerCount]
         game.slots = decompressed.get();

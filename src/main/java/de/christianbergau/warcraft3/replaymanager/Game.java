@@ -19,7 +19,7 @@ public class Game {
     public boolean fullSharedUnitControl;
     public boolean randomHero;
     public boolean randomRaces;
-    public String map;
+    private Map map;
     public String creator;
     public byte slots;
     public boolean isPrivate;
@@ -42,10 +42,18 @@ public class Game {
                 ", fullSharedUnitControl=" + fullSharedUnitControl +
                 ", randomHero=" + randomHero +
                 ", randomRaces=" + randomRaces +
-                ", map=" + map +
+                ", map=" + map.shortName() +
                 ", creator=" + creator +
                 ", slots=" + slots +
                 ", isPrivate=" + isPrivate +
                 '}';
+    }
+
+    public void map(Map map) {
+        this.map = map;
+    }
+
+    public Map map() {
+        return map;
     }
 }

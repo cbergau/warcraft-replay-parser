@@ -1,5 +1,8 @@
 package de.christianbergau.warcraft3.replaymanager;
 
+import de.christianbergau.warcraft3.replaymanager.player.Player;
+import de.christianbergau.warcraft3.replaymanager.player.PlayerId;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.*;

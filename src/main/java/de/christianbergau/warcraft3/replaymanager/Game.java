@@ -1,5 +1,7 @@
 package de.christianbergau.warcraft3.replaymanager;
 
+import de.christianbergau.warcraft3.replaymanager.player.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 

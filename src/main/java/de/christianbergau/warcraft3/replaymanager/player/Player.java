@@ -1,4 +1,4 @@
-package de.christianbergau.warcraft3.replaymanager;
+package de.christianbergau.warcraft3.replaymanager.player;
 
 import de.christianbergau.warcraft3.replaymanager.race.*;
 

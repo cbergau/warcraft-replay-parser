@@ -1,4 +1,4 @@
-package de.christianbergau.warcraft3.replaymanager;
+package de.christianbergau.warcraft3.replaymanager.player;
 
 public class PlayerId {
     private byte value;
